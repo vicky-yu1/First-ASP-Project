@@ -1,0 +1,29 @@
+﻿@model First_ASPNET_Web_App.ViewModels.RandomMovieViewModel
+@{
+    ViewBag.Title = "Random"; // Title of page shown in broswer
+    Layout = "~/Views/Shared/_Layout.cshtml"; // setting up layout for this view
+}
+
+<!-- class "popular" if movie has been rented by > 5 people -->
+@{
+    var className = Model.Customers.Count > 5 ? "popular" : null;
+}
+<!-- render name of movie -->
+<!-- every view has dynamic model property which gives us access to model we pass from controller -->
+<!-- so we have to specify the movie with the directive on line 1 -->
+<h2 class="@className">@Model.Movie.Name </h2>
+
+@if (Model.Customers.Count == 0) // List of customers (model 1) that rented this movie (model 2)
+{
+    <p>No one hase rented this movie before.</p>
+}
+else
+{
+    <ul>
+        @foreach (var customer in Model.Customers)
+        {
+            // Can write C# or HTML code b/c razor view engine knows how to parse the syntax
+            <li>@customer.Name</li>
+        }
+    </ul>
+}
